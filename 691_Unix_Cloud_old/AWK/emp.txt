@@ -1,0 +1,5 @@
+Max 10 100 
+Sam 5 50 
+Beth 10 0 
+John 20 100 
+Tim 5 50

@@ -1,0 +1,37 @@
+#!/usr/bin/awk -f 
+## Awk script to compute min, max and mean for a specified column
+## Column number can be passed as the parameter 'COL'.
+## If not specified, it will default to the last column.
+## 
+BEGIN {
+    OFS = "\t"
+    min=-log(0)
+    max=log(0)
+    sum=0
+    num=0   
+}
+# When processing the first record, determine the column number
+NR==1 {
+    if ( ! COL ) {
+	COL=NF
+    }
+}
+# Process if the specified column is numeric as determined by a regexp
+# This a very simple test that checks to see if the field contains any numbers.
+# If it does, the entire field is treated as a valid numeric entry.
+$COL ~ /[0-9]+/ {
+    num++
+    if ( $COL < min ) {
+	min = $COL
+    }
+    if ( $COL > max ) {
+	max = $COL
+    }
+    sum+=$COL
+}
+END {
+    print "No. of records processed:", num
+    print "Min:", min
+    print "Max:", max
+    print "Mean:", sum/num
+}
